@@ -18,3 +18,27 @@
 ```
     npm run dev
 ```
+
+### Setup instructions for tailwind
+[Tailwind official instruction docs](https://tailwindcss.com/docs/instruction)
+
+1. Install tailwind css
+```
+    npm install -D tailwindcss@3
+```
+2. Create tailwind.config.js file
+```
+    npx tailwindcss init
+```
+
+3. Add file extenstions to tailwind config file in the contents property
+```
+    "./src/**/*.{html,js,jsx,ts,tsx}"
+```
+
+4. Add the tailwind directives at the top of the `index.css` file
+```
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+```
