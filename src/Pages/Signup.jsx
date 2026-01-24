@@ -6,6 +6,9 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { useDispatch } from 'react-redux';
 
+import toast from 'react-hot-toast'
+import { createAccount } from '../Redux/Slices/AuthSlice.js';
+
 function Signup(){
 
     const dispatch = useDispatch();
@@ -43,17 +46,74 @@ function Signup(){
             const fileReader = new FileReader();
             fileReader.readAsDataURL(uploadedImage);
             fileReader.addEventListener('load', function () {
-                //console.log(this.result)
+                console.log(this.result)
                 setPreviewImage(this.result)
             })
         }
+    }
+    // console.log("values:", signupData)
+    // console.log("previewImage:", previewImage)
+
+
+    //
+    async function createNewAccount(event){
+        event.preventDefault();
+
+        //vaidations
+        if(!signupData.email || !signupData.password || !signupData.fullName || !signupData.avatar){
+            toast.error("Please fill all the details")
+            return;
+        }
+
+        //validation - checking name field length
+        if(signupData.fullName.length < 5){
+            toast.error('Name should be atleast of 5 characters')
+            return;
+        }
+
+        //email vaidation
+        if(!signupData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)){
+            toast.error('Invalid email id')
+            return;
+        }
+
+        //checking valid password
+        if(!signupData.password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)){
+            toast.error('Password should be 6 - 16 character long with atleast a number and special character')
+            return;
+        }
+
+        //Creating New form Data after validation
+        const formData = new FormData();
+        formData.append('fullName',signupData.fullName);
+        formData.append('email',signupData.email);
+        formData.append('password',signupData.password);
+        formData.append('avatar',signupData.avatar);
+        console.log("formData",formData)
+
+        // dispatch create  account action
+        const response = await dispatch(createAccount(formData));
+        
+        console.log('responsesss',response)
+        
+        if(response?.payload?.success)
+        navigate('/');
+
+        setSignupData({
+            fullName: "",
+            email: "",
+            password: "",
+            avatar: ""
+        })
+        setPreviewImage("");
+
     }
 
     return (
         <HomeLayout>
             <div className='flex items-center justify-center h-[90vh]'>
 
-                <form className='flex flex-col justify-center items-center gap-3 rounded-lg p-4 text-white w-96 shadow-[0_0_10px]'>
+                <form onSubmit={createNewAccount} noValidate className='flex flex-col justify-center items-center gap-3 rounded-lg p-4 text-white w-96 shadow-[0_0_10px]'>
                     <h1 className='text-center text-2xl font-bold'>Registration Page</h1>
 
                     <label htmlFor="image_uploads" className='cursor-pointer'>

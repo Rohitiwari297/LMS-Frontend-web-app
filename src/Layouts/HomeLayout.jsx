@@ -11,7 +11,7 @@ function HomeLayout({ children }) {
 
   // for checking if user is logged in
   const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
-  //console.log(isLoggedIn)
+  console.log(isLoggedIn)
 
   //for displaying the option acc to role
   const role = useSelector((state) => state?.auth?.role);
@@ -70,7 +70,7 @@ function HomeLayout({ children }) {
 
             {isLoggedIn && role === "ADMIN" && (
               <li>
-                <Link to="/admit.dashboard">Admin DashBoard</Link>
+                <Link to="/admit/dashboard">Admin DashBoard</Link>
               </li>
             )}
 
