@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 
 import toast from 'react-hot-toast'
-import { loginAccound } from '../Redux/Slices/AuthSlice.js';
+import { loginAccount } from '../Redux/Slices/AuthSlice.js';
 
 function Login(){
 
@@ -38,7 +38,7 @@ function Login(){
         }
 
         // dispatch create  account action
-        const response = await dispatch(loginAccound(loginData));
+        const response = await dispatch(loginAccount(loginData));
         
         console.log('responsesss',response)
         
