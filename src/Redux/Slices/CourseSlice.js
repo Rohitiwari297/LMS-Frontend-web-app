@@ -1,8 +1,8 @@
-import toast from "daisyui/components/toast"
+import toast from "react-hot-toast"
 
 import axiosInstance from '../../Helpers/axiosInstance'
 
-const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit")
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 // INITIAL STATE
 const initialState = {
@@ -33,7 +33,13 @@ const courseSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-
+        builder
+            .addCase(getAllCourses.fulfilled, (state, action) => {
+                console.log("payload courses Data:",action.payload)
+                if(action.payload){
+                    state.courseData = [...action.payload];
+                }
+            })
     }
 })
 
