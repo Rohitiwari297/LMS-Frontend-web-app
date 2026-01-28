@@ -1,5 +1,4 @@
 import React from 'react'
-import HomeLayout from '../Layouts/HomeLayout'
 import { useNavigate } from 'react-router-dom';
 
 function Denied() {
