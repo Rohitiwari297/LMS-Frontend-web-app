@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 import toast from 'react-hot-toast'
 import { createAccount } from '../Redux/Slices/AuthSlice.js';
-import { isEmail, isValidPassword } from '../Layouts/regexMatcher.js';
+import { isEmail, isValidPassword } from '../Helpers/regexMatcher.js';
 
 function Signup(){
 

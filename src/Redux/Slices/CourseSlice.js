@@ -9,18 +9,50 @@ const initialState = {
     courseData: []
 }
 
-// CREATE ASYNC THUNK FOR COURSES
+// CREATE ASYNC THUNK FOR FATCH COURSES
 export const getAllCourses = createAsyncThunk(
-    'course/get',
+    '/course/get',
     async () => {
         try {
-            const response = axiosInstance.get('/courses');
+            const response = axiosInstance.get('/courses/');
             toast.promise(response, {
                 loading: "loading course data...",
                 success: "Course loaded successfully",
                 error: "Failed to get the courses",
             })
             return(await response).data.courses;
+        } catch (error) {
+            toast.error(error?.response?.data?.message);
+        }
+    }
+)
+
+// CREATE ASYNC THUNK FOR COURSE CREATION
+export const createNewCourse = createAsyncThunk(
+    '/course/create',
+    async (data) => {
+        try {
+            const formData = new FormData();
+            formData.append('title', data?.title);
+            formData.append('description', data?.description);
+            formData.append('category', data?.category);
+            formData.append('createdBy', data?.createdBy); 
+            formData.append('thumbnail', data?.thumbnail);
+
+            const response = axiosInstance.post('/courses/', formData);
+            response
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+            toast.promise(response, {
+                loading: 'Creating new course...',
+                success: 'Course created successfully',
+                error: 'Failed to create course'
+            })
+            return (await response).data;
         } catch (error) {
             toast.error(error?.response?.data?.message);
         }
